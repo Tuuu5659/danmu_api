@@ -1,5 +1,5 @@
 [build]
-  command = "mkdir -p netlify/functions"
+  command = "npm install --legacy-peer-deps && mkdir -p netlify/functions"
   publish = "."
 
 [functions]

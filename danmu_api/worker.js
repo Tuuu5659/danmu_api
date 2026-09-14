@@ -265,9 +265,11 @@ async function handleRequest(req, env, deployPlatform, clientIp) {
 
   // 兼容部分客户端将自定义弹幕短地址再次拼接官方完整路径的情况
   // 例如: /danmaku/api/v2/fongmi/danmaku?name=...&episode=...
-  if (path.endsWith("/danmaku/api/v2/fongmi/danmaku")) {
-    log("info", `[system] [path fix] Collapsed nested danmaku path: "${path}" -> "/danmaku"`);
-    path = "/danmaku";
+  // 例如: /danmaku/api/v2/comment/12733?format=xml
+  if (path.startsWith("/danmaku/api/v2")) {
+    const collapsed = path.substring("/danmaku".length);
+    log("info", `[system] [path fix] Collapsed nested danmaku path: "${path}" -> "${collapsed}"`);
+    path = collapsed;
   }
 
   // GET /api/config - 获取配置信息 (需要 token)
